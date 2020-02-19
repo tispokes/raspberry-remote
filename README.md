@@ -1,5 +1,11 @@
 # Raspberry Pi Remote
 
+## About this fork from xkonni
+* Supports IPv6
+* Supports 32 bit codes as used in self-learning plugs (changed send, daemon and Sniffer)
+* Supports dimming plugs (only switch on/off w/o status at the moment)
+* Added RFSniffer to scan for 32 bit codes (thnks 433Utils)
+
 ## About
 Control your remote power sockets with a raspberry pi.
 This project includes a web interface.
