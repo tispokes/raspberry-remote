@@ -1,10 +1,16 @@
 # Raspberry Pi Remote
 
-## About this fork from xkonni
-* Supports IPv6
-* Supports 32 bit codes as used in self-learning plugs (changed send, daemon and Sniffer)
-* Supports dimming plugs (only switch on/off w/o status at the moment)
-* Added RFSniffer to scan for 32 bit codes (thnks 433Utils)
+## About this fork - forked from xkonni
+
+* newest RCSwitch.h from 27 Feb 2017: https://github.com/sui77/rc-switch/commit/f820d2e46ab227ac800960b57cdefc8f912006c6
+* newest RCSwitch.cpp from 16 Jan 2020: https://github.com/sui77/rc-switch/commit/a847651c3238856611fa3b9b6a48eb1f87c0313c
+* IPv6 support (inmho you can leave the daemon.h untouched, just setup in config.php)
+* bit of css-styling (minimalistic)
+* some self-learing plugs have a 32 bit interface - implemented it
+* supports 32 bit codes in the webinterface
+* supports 32 bit codes in sendcode and RFSniffer (for testing purpose you may need it) [added both files]
+* supports switching on/off a plug with a dimming function
+* TODO: update send to new RCSwitch
 
 ## About
 Control your remote power sockets with a raspberry pi.

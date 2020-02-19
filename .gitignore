@@ -1,4 +1,9 @@
 send
 daemon
+RFSniffer
+codesend
 *.o
 *.swp
+.vscode
+org
+*.org

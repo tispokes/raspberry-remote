@@ -39,13 +39,17 @@ void printUsage() {
     printf("   export the GPIO pin using the gpio utility. Note that pin numbers are\n");
     printf("   BCM_GPIO numbers in this mode! the export command for the default port is\n");
     printf("   \"gpio export 17 out\". For more information about port numbering see\n");
-    printf("   http://wiringpi.com/pins/.\n\n");
+    printf("   http://wiringpi.com/pins/.\n");
+    printf(" -r, --raw:\n");
+    printf("   Send Code with raw data: name <raw> [<bits> <protocol>]\n");
+    printf("   [standard bits = 32, protocol = 2]\n\n");
 }
 
 int main(int argc, char *argv[]) {
     bool silentMode = false;
     bool binaryMode = false;
     bool userMode = false;
+    bool rawMode = false;
     int pin = 0;
     int controlArgCount = 0;
     char *systemCode;
@@ -62,11 +66,12 @@ int main(int argc, char *argv[]) {
               {"pin", required_argument, 0, 'p'},
               {"silent", no_argument, 0, 's'},
               {"user", no_argument, 0, 'u'},
+	      {"raw", no_argument, 0, 'r'},
               0
             };
         int option_index = 0;
 
-        c = getopt_long (argc, argv, "bhp:su",long_options, &option_index);
+        c = getopt_long (argc, argv, "bhp:sur",long_options, &option_index);
         /* Detect the end of the options. */
         if (c == -1)
             break;
@@ -84,6 +89,9 @@ int main(int argc, char *argv[]) {
             case 'u':
                 userMode = true;
                 break;
+	    case 'r':
+		rawMode = true;
+		break;
             case 'h':
                 printUsage();
                 return 0;
@@ -111,6 +119,9 @@ int main(int argc, char *argv[]) {
             if (userMode) {
                 printf("operating in user mode\n");
             }
+	    if (rawMode) {
+		printf("operating in raw mode\n");
+	    }
             printf("using pin %d\n", pin);
         }
 
@@ -146,7 +157,17 @@ int main(int argc, char *argv[]) {
         RCSwitch mySwitch = RCSwitch();
         mySwitch.setPulseLength(300);
         mySwitch.enableTransmit(pin);
-
+	
+	if (rawMode){
+	    if (!silentMode)
+		    printf("sending raw[%lu] bits[%i] protocol[%i]", raw, bits, protocol);
+	    unsigned long raw = strtoul(argv[1], NULL, 0);
+	    int bits = atoi(argv[2]);
+	    int protocol = atoi(argv[3]);
+	    mySwitch.setProtocol(protocol);
+	    mySwitch.send(raw, bits);
+	    return 0;
+	}
         for (i = 0; i < numberOfActuators; i++) {
             int indexSystemCode = i * 2;
             int indexUnitCode = indexSystemCode + 1;

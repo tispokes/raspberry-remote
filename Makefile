@@ -1,17 +1,21 @@
-DESCRIPTION = "RCSwitch on Raspberry Pi"
-LICENSE = "GPL"
-VERSION = 1.0
 
-CXXFLAGS += -Wall
-CXXFLAGS += -lwiringPi
+# Defines the RPI variable which is needed by rc-switch/RCSwitch.h
+CXXFLAGS=-DRPI
 
-default: daemon
-
-daemon: RCSwitch.o daemon.o
-	$(CXX) -Wall -pthread $+ -o $@ $(CXXFLAGS) $(LDFLAGS)
+all: codesend RFSniffer daemon
 
 send: RCSwitch.o send.o
-	$(CXX) $+ -o $@ $(CXXFLAGS) $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $+ -o $@ -lwiringPi -lwiringPiDev -lcrypt
+	
+codesend: RCSwitch.o codesend.o
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $+ -o $@ -lwiringPi -lwiringPiDev -lcrypt
+	
+RFSniffer: RCSwitch.o RFSniffer.o
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $+ -o $@ -lwiringPi -lwiringPiDev -lcrypt
+	
+daemon: RCSwitch.o daemon.o
+	$(CXX) -Wall -pthread $+ -o $@ -Wall -fpermissive -lwiringPi $(LDFLAGS)
 
 clean:
-	rm -f *.o send daemon
+	$(RM) *.o send codesend daemon RFSniffer
+

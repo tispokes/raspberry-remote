@@ -1,7 +1,6 @@
 body {
-  background-color:#111;
-  color: yellow;
-  font-family: Calibri, sans-serif;
+  background-color:#000000;
+  color: white;
   font-size: 1.5em;
 }
 
@@ -10,14 +9,9 @@ h3 {
 }
 
 table {
-  vertical-align: left;
+  vertical-align: middle;
   text-align: center;
   border-spacing: 10px;
-  border-radius: 30px;
-}
-
-.on, .off{
-  display: block;
 }
 
 a:link {
@@ -55,14 +49,12 @@ a:active {
 
 /* Default */
 td.outer {
-  border-radius: 10px;
   padding: 5px;
   width: 300px;
   height: 170px;
 }
 
 td.inner {
-  border-radius: 10px;
   width: 280;
   height: 150px;
 }
